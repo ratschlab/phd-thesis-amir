@@ -1,0 +1,20 @@
+
+\begin{tikzpicture}[scale=.45]
+\draw (-12,4) node[anchor=north west]{$G^\ell=\ip{\Norm{x}_i^\ell}{\Norm{x}_j^\ell}_{i,j}\in\R^{3\times 3}$};
+
+
+\foreach \i/\l in {0/0} {
+    \foreach \j/\angle in {5.5/20} {
+        \coordinate (O) at (0+\i,-4+\j);
+        \draw[dashed] (O) -- ++(0:5-\l) node(A){} -- ++(90-\angle:3+\l) node(B){} -- ++(180:5-\l) node(C){} -- cycle;
+        \draw[dashed] (A) -- ++(2,2);
+        \draw[dashed] (B) -- ++(2,2);
+        \draw[dashed] (C) -- ++(2,2);
+        \draw[dashed] ($(O)+(2,2)$) -- ++(0:5-\l) -- ++(90-\angle:3+\l) -- ++(180:5-\l) -- cycle;
+
+        \draw[->] (O) -- ++(0:5-\l) node[midway,below] {$\Norm{x}^\ell_1$};
+        \draw[->] (O) -- ++(90-\angle:3+\l) node[midway,left] {$\Norm{x}^\ell_2$};
+        \draw[->] (O) -- ++(2,2) node[below] {$\Norm{x}^\ell_3$};
+    }
+}
+\end{tikzpicture}

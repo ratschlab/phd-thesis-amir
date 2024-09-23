@@ -1,0 +1,62 @@
+# LaTeX build files
+# *.pdf
+*.aux
+*.bbl
+*.blg
+*.brf
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex
+*.synctex(busy)
+*.nav
+*.snm
+*.vrb
+*/data
+
+# PDF and other output files
+*.dvi
+*.ps
+*.eps
+
+# Temporary files
+*.bak
+*.backup
+*.tmp
+*.swp
+*.swo
+
+# MacOS specific files
+.DS_Store
+
+# Other LaTeX auxiliary files
+*.thm
+*.glg
+*.glo
+*.gls
+*.ist
+*.acn
+*.acr
+*.alg
+*.bcf
+*.run.xml
+*.nav
+*.snm
+*.spl
+
+# Auxiliary directories
+_tex2pdf.*
+*.asv
+thesis-index-blx.bib
+thesis-index.loa
+
+# Ignore .venv and its content
+/.venv/

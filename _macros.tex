@@ -1,0 +1,32 @@
+% !TEX root = thesis-index.tex
+% Allow overfull boxes which don't overflow more than 20pts (remove before the last version)
+\hfuzz=20pt
+
+% Issue with transparency of included pdf images (if there is more than 1 per page with \group
+% defined pdflatex doesn't know which one to consider the top one ...)
+\pdfsuppresswarningpagegroup=1
+
+\newcommand{\cleardoublepageempty}{
+  \clearpage
+  \thispagestyle{empty}
+  \cleardoublepage
+}
+
+\usepackage{array}
+\newcolumntype{H}{>{\setbox0=\hbox\bgroup}c<{\egroup}@{}} % Useful to hide a column of a table (just define it as H)
+
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{%
+\newenvironment{rep#1}[1]{%
+ \def\rep@title{#2 \ref{##1}}%
+ \begin{rep@theorem}}%
+ {\end{rep@theorem}}}
+\newreptheorem{lemma}{Lemma'}
+\newreptheorem{theorem}{Theorem'}
+\newreptheorem{corollary}{Corollary'}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{proposition}[theorem]{Proposition}
+

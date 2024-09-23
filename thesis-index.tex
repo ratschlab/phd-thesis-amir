@@ -1,0 +1,109 @@
+\documentclass[12pt, a4paper, twoside, english, final]{ETHthesis}
+\emergencystretch=1em
+\input{_packages}
+\input{_macros}
+\input{my_packages}
+\input{my_macros}
+\graphicspath{{figures/intro/}{figures/batchnorm_neurips2021/}{figures/sketchy_aligner/}{figures/tensor_sketching/}{figures/NeurIPS2023_isometry/}{figures/ICML_meanfield_deep/}{figures/grad-nn-iclr24/}{figures/neural_kernel}}
+
+\bibliography{refs.bib}
+
+
+\begin{document}
+\initETHthesis
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COVER PAGE %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\dissnum{}
+% \title{Viewing Neural Networks via Prism of Isometry}
+\title{On a Mathematical Understanding of\\ Deep Neural Networks}
+
+
+\author{Amir Joudaki}
+\acatitle{MSc ETH in Computer Science, ETH Zurich}
+\dateofbirth{25.06.1989}
+\citizen{Iran}
+%\date{November 2020}
+\Year{2024}
+\examiners{
+  Prof.\ Dr.\ Gunnar R\"atsch (ETH Zurich), examiner\linebreak
+  Prof.\ Dr.\ Thomas Hoffman (ETH Zurich), co-examiner \linebreak
+  Prof.\ Dr.\ Francis Bach (INRIA Paris), co-examiner \linebreak
+}
+\support{}
+\disclaimer{}
+\pagestyle{empty}
+\hypersetup{pageanchor=false}
+\maketitle
+\hypersetup{pageanchor=true}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% PREAMBLE %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{plain}
+\pagenumbering{roman}
+\include{chapters/preamble} 
+\cleardoublepageempty{}
+\selectlanguage{english}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TOC %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{1}
+\pagestyle{headings}
+\pdfbookmark[0]{\contentsname}{contents}
+\tableofcontents
+\cleardoublepageempty{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BODY %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{arabic}
+% \part{Introduction and Contributions}
+\cleardoublepageempty{}
+
+
+\input{chapters/intro.tex}
+% \input{chapters/mlp_case.tex}
+\input{chapters/bn_ortho.tex}
+\input{chapters/bn_MF.tex}
+\input{chapters/iso_norm.tex}
+\input{chapters/isometry.tex}
+\input{chapters/bn_grad.tex}
+\input{chapters/conclusion.tex}
+
+\cleardoublepageempty{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% APPENDIX %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+% \part{Appendix}
+\include{chapters/appendix.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% LIST OF TABLES / FIGURES / ALGORITHMS %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pdfbookmark[-1]{Lists of Tables}{lot}
+\listoftables{}
+\cleardoublepageempty{}
+% \listsubcaptions
+\pdfbookmark[-1]{Lists of Figures}{lof}
+\listoffigures{}
+\cleardoublepageempty{}
+\pdfbookmark[-1]{Lists of Algorithms}{loa}
+\listofalgorithms{}
+\cleardoublepageempty{}
+
+
+%%%%%%%%%%%%%%%%
+%% BIBLIOGRAPHY %
+%%%%%%%%%%%%%%%%%
+\pdfbookmark[-1]{Bibliography}{book:bibliography}
+\printbibliography{}
+\cleardoublepageempty{}
+\clearpage
+\cleardoublepageempty{}
+\end{document}

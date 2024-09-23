@@ -1,0 +1,29 @@
+\begin{tikzpicture}[scale=.40]
+
+\draw (5,-3) node{$ \frac{\norm{x_1} \norm{x_2}\sin\theta}{\frac12(\norm{x_1}^2+\norm{x_2}^2)}$}
+(20,-3) node{$\frac{\text{Vol}(\{x_i\}_{i\le n})^{2/n}}{\frac1n\sum_i^n \norm{x_i}^2} = \frac{\det(X^\top X)^{1/n}}{\frac1n \tr(X^\top X)}$};
+    \foreach \i/\l in {0/0, 6.5/1} {
+        \foreach \j/\angle in {0/0, 5.5/30} {
+            \coordinate (O) at (\i,\j*1.1);
+            \draw[dashed] (O) -- ++(0:5-\l) -- ++(90-\angle:3+\l) -- ++(180:5-\l) -- cycle;
+            \draw[->] (O) -- ++(0:5-\l) node[midway,below] {$\vec{x_1}$};
+            \draw[->] (O) -- ++(90-\angle:3+\l) node[midway,left] {$\vec{x_2}$};
+            \draw (O) ++(.5,0) arc (0:90-\angle:0.5) node[midway,above,right] {$\theta$};
+        }
+    }
+    \foreach \i/\l in {0/0, 7/1} {
+        \foreach \j/\angle in {0/0, 5.6/30} {
+            \coordinate (O) at (14+\i,\j*1.2);
+            \draw[dashed] (O) -- ++(0:5-\l) node(A){} -- ++(90-\angle:3+\l) node(B){} -- ++(180:5-\l) node(C){} -- cycle;
+            \draw[dashed] (A) -- ++(1,1);
+            \draw[dashed] (B) -- ++(1,1);
+            \draw[dashed] (C) -- ++(1,1);
+            \draw[dashed] ($(O)+(1,1)$) -- ++(0:5-\l) -- ++(90-\angle:3+\l) -- ++(180:5-\l) -- cycle;
+
+            \draw[->] (O) -- ++(0:5-\l) node[midway,below] {$\vec{x_1}$};
+            \draw[->] (O) -- ++(90-\angle:3+\l) node[midway,left] {$\vec{x_2}$};
+            \draw[->] (O) -- ++(1,1) node[below] {$\vec{x_3}$};
+            % \draw (O) ++(.5,0) arc (0:90-\angle:0.5) node[midway,above,right] {$\theta$};
+        }
+    }
+\end{tikzpicture}

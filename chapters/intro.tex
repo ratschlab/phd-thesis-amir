@@ -1,0 +1,108 @@
+% !TEX root = ../thesis-index.tex
+
+\chapter{Introduction}\label{ch:intro}
+
+Deep neural networks have revolutionized the field of artificial intelligence, achieving unprecedented performance in a wide range of tasks, from image recognition~\cite{krizhevsky2012imagenet} to natural language processing~\cite{devlin2018bert}. Despite their remarkable success, these models often remain enigmatic, functioning as ``black boxes'' that transform inputs into outputs through a complex series of non-linear operations~\cite{alain2016understanding}. This lack of theoretical understanding poses significant challenges for researchers and practitioners, as it hinders our ability to better understand and optimize these systems.
+
+At the heart of the deep learning paradigm lies signal propagation—the journey of information as it flows through the layers of a neural network during both forward and backward passes~\cite{glorot2010understanding}. Understanding this process is crucial for several reasons. It provides insights into how neural networks process and transform information, potentially illuminating the principles underlying their underlying processes. A deeper understanding of signal propagation can guide the design of better network initialization~\cite{glorot2010understanding}, more effective network architectures~\cite{he2016deep}, and more efficient optimization algorithms~\cite{kingma2014adam}. Overall, a theoretical understanding contributes to the broader goal of making neural networks more principled and efficient design and understanding of neural networks.
+
+The importance of signal propagation becomes particularly evident when considering the challenges associated with training deep neural networks. As networks grow in depth, they gain the potential for increased expressivity and the ability to learn more complex representations~\cite{bengio1994learning}. However, this increased depth also introduces significant obstacles to stable training, many of which are directly related to how signals propagate through the network~\cite{glorot2010understanding, he2015delving}. This thesis aims to bridge some of these gaps in our understanding. 
+
+\section{Research objectives and scope}
+
+The primary objective of this thesis is to demystify certain behaviors of neural networks by conducting a thorough investigation into the effects of various neural network components on signal propagation through depth. Specifically, we aim to address the following central research question: 
+
+\textit{How do forward and backward passes evolve as signals propagate through the layers of a deep neural network?}
+
+To approach this question comprehensively, we focus on several key aspects of neural network design: fully connected layers, weight initialization, normalization techniques, and non-linear activations. Fully connected layers serve as fundamental building blocks of neural networks and provide a starting point for our analysis~\cite{saxe2013exact}. The choice of initial weights can dramatically affect a network's training dynamics, and we investigate various initialization strategies and their impact on signal propagation~\cite{saxe2013exact,glorot2010understanding, he2015delving}. Second, normalization layers such as Batch Normalization (BN)~\cite{ioffe2015batch}, and Layer Normalization (LN)~\cite{ba2016layer} have been crucial in enabling the training of very deep networks, and we analyze how these techniques influence signal flow and stability. Third, the choice of non-linear activation function significantly affects a network's representational capacity and training dynamics, so we examine popular choices such as ReLU~\cite{nair2010rectified} and hyperbolic tangent, exploring their effects on signal propagation~\cite{glorot2011deep,maas2013rectifier,clevert2015fast,he2015delving,ramachandran2017searching}.
+
+
+From a mathematical perspective, our analysis focuses on two key operations within neural networks: matrix products and element-wise activations. Matrix products, which occur in linear layers, transform representations between layers and affect how signals propagate through the network~\cite{saxe2013exact}. Non-linear activation functions introduce crucial non-linearities into the network, and we investigate how different activation functions shape the distribution of activations and gradients~\cite{klambauer2017self,pennington2017resurrecting,pennington2018emergence}. While normalization layers like BN and LN are non-linear operations, they do not act elementwise. Somewhat surprisingly, we find that we can study them also as a special type of matrix product, where one of the matrices is diagonal and is proportional to the standard deviation of the activations in feature or batch space~\cite{daneshmand2020batch,daneshmand2021batch}.
+
+Our analysis primarily focuses on networks at initialization, as this initial state plays a critical role in determining the subsequent optimization trajectory and the network's ultimate performance~\cite{saxe2013exact, xiao2018dynamical, frankle2018lottery, pennington2017resurrecting}. This enables us to leverage tools from random matrix theory and Markov chain theory to analyze how layer representations evolve stochastically. 
+
+\section{Challenges in training deep neural networks}
+
+As neural networks have grown deeper, achieving state-of-the-art performance across various tasks~\cite{he2016deep, devlin2018bert}, two main challenges have emerged in training these architectures effectively~\cite{pascanu2013difficulty}. In the backward pass, the vanishing and exploding gradients issues become significant~\cite{bengio1994learning, pascanu2013difficulty,hanin2018neural}. In the forward pass, the problem of representation collapse occurs, where different input samples map to increasingly similar representations as depth increases~\cite{daneshmand2020batch,noci2022signal}. Both representation collapse and gradient instability substantially affect training dynamics and network performance~\cite{hanin2018neural}.
+
+
+\subsection{Explosion and vanishing gradients}
+The problems of exploding and vanishing gradients have been long-standing challenges in training deep neural networks~\cite{hochreiter1991untersuchungen, bengio1994learning}. These issues arise during the backward pass of the backpropagation algorithm and can severely hinder the learning process.
+
+Gradient explosion occurs when the gradients grow as they propagate backward through the network layers, which can lead to numerical instability, causing the training process to diverge~\cite{pascanu2013difficulty}. Conversely, vanishing gradients occur when the gradients become exponentially small, effectively preventing the network from learning long-range dependencies~\cite{hochreiter1998vanishing}.
+
+The vanishing gradient problem is particularly detrimental when it affects a network's first or last layers. In the case of first-layer vanishing gradients, the network fails to capture important features from the input data, leading to a loss of crucial information at the beginning of the network~\cite{glorot2010understanding}. When gradients vanish in the last layers, the network struggles to propagate error signals back to earlier layers, resulting in poor fine-tuning of the overall network~\cite{he2015delving}.
+
+Moreover, vanishing gradients can cause a deep network to behave like a much shallower one, negating the potential benefits of deep architectures in learning hierarchical representations~\cite{srivastava2015training}. This "effective shallowness" limits the network's ability to learn complex, non-linear mappings that deep learning is renowned for~\cite{bengio2007scaling}.
+
+The vanishing and exploding gradient problems are intimately related to depth, weight initialization, and activation functions~\cite{glorot2010understanding, he2015delving}. From a mathematical perspective, gradients can be represented as an extended chain of matrix products, a consequence of the chain rule in calculus. The primary challenge arises in maintaining a stable gradient flow as this product chain grows~\cite{saxe2013exact,pascanu2013difficulty}. To combat these issues, researchers have devised several strategies. These include meticulous weight initialization techniques~\cite{saxe2013exact, glorot2010understanding}, strategic selection of activation functions~\cite{nair2010rectified, clevert2015fast,klambauer2017self}, and innovative architectural designs such as skip connections in residual networks~\cite{he2016deep}. These approaches collectively aim to mitigate the adverse effects of deep network architectures on gradient propagation.
+
+
+\subsection{Rank collapse}
+
+Rank collapse refers to the phenomenon where the outputs of deep neural networks become increasingly correlated as the depth increases, leading to a loss of expressivity~\cite{daneshmand2020batch}. This issue is particularly prevalent in networks with standard initialization schemes and can severely impede the network's ability to learn complex representations~\cite{daneshmand2020batch}. In mathematical terms, rank collapse manifests as a decrease in the rank of the Gram matrix of hidden representations as signals propagate through the network~\cite{daneshmand2020batch}. This reduction in rank effectively limits the network's capacity to represent diverse features, which is shown to be hard to recover during training~\cite{daneshmand2020batch,daneshmand2021batch}.
+
+Recent studies have shown that rank collapse is not limited to fully connected networks but also affects other architectures such as convolutional neural networks~\cite{xiao2018dynamical} and transformers~\cite{dong2021attention,noci2022signal}. Addressing rank collapse is crucial for enabling the training of very deep networks and fully leveraging their potential representational power.
+
+Rank collapse and the vanishing gradient are closely interconnected phenomena stemming from the challenge of proper signal propagation through the network~\cite{daneshmand2020batch, hanin2018neural}. Informally, both issues can be viewed as the network ``losing'' information as it propagates through successive layers. While vanishing gradients pertain to the backward pass, rank collapse is a statement about the forward pass, making their formal relationship less apparent~\cite{pennington2017resurrecting}. Consequently, further theoretical investigations are necessary to elucidate the connection between these two phenomena and develop strategies to address them concurrently~\cite{yang2018a, hanin2018start}.
+
+\subsection{Impact on Training Dynamics}
+The phenomena of rank collapse and gradient instability substantially affect the training dynamics and overall performance of deep neural networks. These challenges manifest in several interconnected ways, significantly impacting the efficiency and effectiveness of the learning process. Networks suffering from rank collapse or gradient issues often require significantly more training iterations to achieve comparable performance~\cite{ioffe2015batch,santurkar2018does,daneshmand2020batch,daneshmand2021batch}. This increased training time can be a major bottleneck, especially for large-scale models and datasets.
+
+Moreover, while very deep networks should, in theory, be capable of learning highly abstract and hierarchical features~\cite{bengio2007scaling,zeiler2014visualizing}, these issues can prevent the network from fully utilizing its depth~\cite{he2016deep,huang2017densely}. This limitation undermines one of the primary advantages of deep architecture. Gradient instability also makes networks more sensitive to choices of learning rate, initialization scheme, and other hyperparameters~\cite{zhang2019fixup,luo2019adaptive}. This increased sensitivity complicates the training process and can lead to inconsistent results across different runs.
+
+\subsection{Addressing challenges of depth}
+
+To address the issues with gradient stability and rank collapse, researchers have proposed various techniques, including careful initialization schemes~\cite{glorot2010understanding,he2015delving}, normalization layers~\cite{ioffe2015batch,ba2016layer}, skip connections~\cite{he2016deep,huang2017densely}, and gradient clipping~\cite{pascanu2013difficulty,zhang2019gradient}. While these methods have shown empirical success, a deeper theoretical understanding of their effects on signal propagation is crucial for developing more principled approaches to network design and optimization~\cite{saxe2013exact,pennington2017resurrecting,yang2018a}.
+
+Despite these advances, many open questions remain regarding the optimal strategies for mitigating rank collapse and gradient instability across different network architectures and tasks~\cite{hanin2018start,yang2018a}. Future research in this area will likely focus on developing a unified theory that explains how these various techniques interact and how they can be combined optimally to improve neural network training and performance~\cite{pennington2018emergence,yang2020tensor}. 
+
+% \subsection{Impact on training dynamics}
+
+% The rank collapse and gradient instability issues significantly influence the training dynamics and overall performance of deep neural networks. These challenges can manifest in several ways. Networks suffering from rank collapse or gradient issues often require more training iterations to achieve comparable performance~\cite{ioffe2015batch}. Very deep networks should, in theory, be capable of learning highly abstract and hierarchical features~\cite{bengio2007scaling}. However, these issues can prevent the network from fully utilizing its depth~\cite{he2016deep}. Networks that fail to learn diverse representations due to rank collapse may struggle to generalize well to unseen data~\cite{daneshmand2020batch}. These issues can make networks more sensitive to the choice of learning rate, initialization scheme, and other hyperparameters~\cite{zhang2019fixup}.
+
+% To address these challenges, researchers have proposed various techniques, including careful initialization schemes~\cite{glorot2010understanding, he2015delving}, normalization layers~\cite{ioffe2015batch, ba2016layer}, skip connections~\cite{he2016deep}, and gradient clipping~\cite{pascanu2013difficulty}. While these methods have shown empirical success, a deeper theoretical understanding of their effects on signal propagation is crucial for developing more principled approaches to network design and optimization.
+
+
+
+\section{Thesis structure and contributions}
+This dissertation explores the challenges in training deep neural networks and proposes novel approaches to address these issues. The chapters are given in the same chronological order in which they were written and published. The chapters are as follows:
+
+\begin{itemize}
+    % \item \textbf{Chapter \ref{ch:warmup}:} Warmup \\
+    % This chapter introduces the fundamental challenges in training deep neural networks, focusing on the problems of exploding and vanishing gradients and rank collapse. It provides a theoretical foundation for understanding these issues through the lens of linear MLPs and long-tailed distributions of activations. The chapter also introduces the concept of batch normalization and presents initial analyses of its effects.
+    
+    \item \textbf{Chapter \ref{ch:bn_ortho}:} Batch Normalization Orthogonalizes Representations. 
+ This chapter presents a novel theoretical analysis of batch normalization, demonstrating how it orthogonalizes representations in deep neural networks.
+ Relevant publications: Hadi Daneshmand, Amir Joudaki, and Francis Bach. ``Batch normalization orthogonalizes representations in deep random networks.'' In \textit{Advances in Neural Information Processing Systems}, vol. 34, pp. 4896-4906, 2021~\cite{daneshmand2021batch}.
+    
+    \item \textbf{Chapter \ref{ch:bn_MF}:} Bridging Mean field and Finite Width gap. 
+ Here, we extend the analysis of batch normalization to bridge the gap between mean field theory and finite-width networks. We present concentration bounds for mean field predictions with batch normalization.
+ Relevant publication: Amir Joudaki, Hadi Daneshmand, and Francis Bach. ``On Bridging the Gap between Mean Field and Finite Width in Deep Random Neural Networks with Batch Normalization.'' In \textit{International Conference on Machine Learning}, 2023~\cite{joudaki2023bridging}.
+    
+    \item \textbf{Chapter~\ref{ch:isometry_normalization} \& Chapter~\ref{ch:isometry_activation}:} Discuss how normalization and activation functions can lead to isometry of representations in deep neural networks.
+ Relevant publication: Amir Joudaki, Hadi Daneshmand, and Francis Bach. ``On the impact of activation and normalization in obtaining isometric embeddings at initialization.'' In \textit{Advances in Neural Information Processing Systems}, vol. 36, pp. 39855-39875, 2023~\cite{joudaki2023impact}.
+    
+    \item \textbf{Chapter \ref{ch:bn_grad}:} Batch Normalization without Gradient Explosion. This chapter presents how a theoretically inspired weight initialization can prevent gradient explosion with batch normalization. Relevant publication: Alexandru Meterez*, Amir Joudaki*, Francesco Orabona, Alexander Immer, Gunnar Ratsch, and Hadi Daneshmand. ``Towards Training Without Depth Limits: Batch Normalization Without Gradient Explosion.'' In \textit{International Conference on Learning Representations}, 2024~\cite{meterez2024towards}.
+    
+    \item \textbf{Chapter \ref{ch:conclusion}:} Conclusion and Future Directions. This chapter summarizes the main contributions of the dissertation and outlines potential avenues for future research.
+\end{itemize}
+
+Each chapter improves our understanding of deep neural network training dynamics and provides novel techniques for addressing depth challenges in these models.
+
+\paragraph{Personal Retrospective.} For this dissertation, I decided to focus on the theoretical aspects of the contributions and leave most of the contributions of a purely empirical nature out of the dissertation. While the empirical results are important and interesting, I aimed to provide a more coherent and consistent narrative throughout the dissertation by focusing on the theoretical aspects. The empirical results are available in the corresponding publications.
+\looseness=-1
+
+% \section{Publications relevant to this dissertation}
+% \label{sec:publications}
+
+% \begin{itemize}
+%     \item Hadi Daneshmand, Amir Joudaki, and Francis Bach. "Batch normalization orthogonalizes representations in deep random networks." In \textit{Advances in Neural Information Processing Systems}, vol. 34, pp. 4896-4906, 2021.
+    
+%     \item Amir Joudaki, Hadi Daneshmand, and Francis Bach. "On Bridging the Gap between Mean Field and Finite Width in Deep Random Neural Networks with Batch Normalization." In \textit{International Conference on Machine Learning}, 2023.
+    
+%     \item Amir Joudaki, Hadi Daneshmand, and Francis Bach. "On the impact of activation and normalization in obtaining isometric embeddings at initialization." In \textit{Advances in Neural Information Processing Systems}, vol. 36, pp. 39855-39875, 2023.
+    
+%     \item Alexandru Meterez, Amir Joudaki, Francesco Orabona, Alexander Immer, Gunnar R{\"a}tsch, and Hadi Daneshmand. ``Towards Training Without Depth Limits: Batch Normalization Without Gradient Explosion.'' In \textit{International Conference on Learning Representations}, 2024~\cite{meterez2024towards}.
+% \end{itemize}
+

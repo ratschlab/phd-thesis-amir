@@ -1,0 +1,41 @@
+% !TEX root = ../thesis-index.tex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CONCLUSION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Discussion and Conclusion}\label{ch:conclusion}
+
+This thesis has made significant contributions to advancing the theoretical understanding of deep neural networks, with a particular focus on the behavior of MLPs at initialization. Despite neural networks' complex and non-linear nature, the research presented here offers several key insights into their mathematical properties. These contributions enhance the growing body of research to establish a solid theoretical foundation for deep neural networks. 
+
+\paragraph{Contributions.}
+One of the primary contributions of this work is the demonstration that BN induces orthogonality in deeply hidden representations within mini-batches. This result was elaborated in Chapter \ref{ch:bn_ortho}. Additionally, this thesis has shown that when BN is applied, the mean field approximation provides a reliable predictor of behavior even in finite-width networks, as detailed in Chapter \ref{ch:bn_MF}. Another significant finding is the layer and batch normalization tendency to bias activations toward a more isometric distribution, as discussed in Chapter \ref{ch:isometry_normalization}. Furthermore, non-linear activations promote isometry in activations, explored in Chapter \ref{ch:isometry_activation}. Finally, the work demonstrates that the problem of gradient explosion, often encountered in networks utilizing BN, can be effectively mitigated through orthogonal weight initialization, as shown in Chapter \ref{ch:bn_grad}.
+
+From a mathematical perspective, this thesis provided two significant theoretical insights. First, we identified emergent behaviors in matrix products that arise from fully connected and normalization layers, including an intriguing property of normalization layers in Chapter~\ref{ch:isometry_normalization}. This property of normalization layers was later used in Chapter~\ref{ch:bn_grad} to analyze gradients. Second, the application of Hermite polynomials in Chapter~\ref{ch:isometry_activation} proved instrumental in shedding light on the effects of non-linear activations on signal propagation. This novel application of Hermite polynomials deepens our understanding of how non-linearity impacts signal propagation.
+
+
+\paragraph{Limiations of this thesis.}
+A core challenge throughout this work has been to develop a theory that is both mathematically rigorous and closely aligned with realistic neural network configurations. To achieve tractability, we made several simplifications, such as focusing on linear activations in Chapters \ref{ch:bn_ortho} and \ref{ch:bn_grad}, employing mixing-type assumptions in Chapters \ref{ch:bn_ortho} and \ref{ch:bn_MF}, assuming that batch size and network width are of the same order in Chapter \ref{ch:bn_grad}, and using mean field approximations in Chapters \ref{ch:bn_MF} and \ref{ch:isometry_activation}. Finally, the primary limitation of this dissertation is its focus on the behavior of networks at initialization with randomly chosen weights. While this assumption was critical to the tractability of the analysis, it naturally restricts the direct applicability of the results to trained networks. Extending theoretical insights to trained networks will require developing new analytical tools and methods.
+
+Despite these necessary simplifications, the theoretical results presented here align well with observed behavior in more realistic settings where such assumptions are relaxed. This demonstrates that theoretical insights can retain practical relevance, even when derived under simplifying conditions. At the same time, the research points to certain limitations, which will be discussed in the following section.
+
+
+\paragraph{Future avenues for research}
+Looking ahead, several avenues of research offer promising opportunities for further exploration.   
+
+% gradients analysis 
+Analyzing training dynamics in a deep network with non-linear dynamics remains theoretically challenging. However, analyzing gradients at initialization can move us one step closer to that goal. For example, analyzing the backward gradients, particularly in terms of non-linear activations, can be highly rewarding and impactful. In particular, if we combine insights from forward and backward passes of neural networks, we can arrive at a quantitative characterization of the neural target kernel for a particular choice of activation function. 
+
+% architectures 
+One of the most important future directions involves extending the findings of this thesis to other network architectures, such as transformers and recurrent neural networks. For example, given that feedforward layers are one of the main components of transformer architecture, the insights developed in this thesis for feedforward settings can be insightful for studying how layer normalization and non-linear activation functions behave in transformers. As another example, the problem of learning long-range dependencies in recurrent settings can be viewed as a vanishing gradient problem. As we argued in several chapters, batch normalization is an effective module for dealing with vanishing gradients in a feedforward setup. While these insights are not directly applicable to recurrent settings, finding analogs of batch normalization in a recurrent setting is worth exploring. Alternatively, insights on the importance of initialization in Chapter~\ref{ch:bn_grad} and Chapter~\ref{ch:bn_ortho} can provide new perspectives on leveraging initialization to control gradients in recurrent architectures.
+
+
+% non mean field 
+As mentioned earlier in limitations, the mean field assumption that the width of the network tends to infinity was a necessary simplification in some of our theoretical analyses. While this assumption has considerable benefits, it also raises questions as to the accuracy of the theoretical predictions. While we saw in Chapter~\ref{ch:bn_MF} that in some cases, these predictions are accurate, developing non-asymptotic results remains a significant theoretical challenge. A middle-ground approach that has shown promise and higher accuracy is tending the width and depth of the network to infinity while keeping their ratio constant. 
+
+
+% free probability 
+
+\paragraph{Concluding remarks.}
+In conclusion, this dissertation advances our mathematical understanding of deep neural networks, particularly in signal propagation, normalization techniques, and initialization strategies. By applying a fresh mathematical perspective, this work has laid the groundwork for future research to bridge the gap between theoretical understanding and practical application in deep learning. 
+The need for robust theoretical foundations becomes increasingly critical as neural networks grow in complexity and capability. This work contributes to that foundation, offering both immediate insights and promising avenues for future exploration in theory of neural networks. 

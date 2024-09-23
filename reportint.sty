@@ -1,0 +1,113 @@
+% **********************************************
+% *                                            *
+% *    Substyle for international reports      *
+% *                                            *
+% **********************************************
+%
+% FILENAME:   reportint.sty
+%
+% ABSTRACT:   Modifications to the 'report document style V2.09' for
+%             international reports. Language dependent strings will be
+%             translated according to the chosen language (currently only
+%             D and E).
+%
+% USAGE:      \documentstyle[<lang.>,reportint]{report}
+%
+% EXCEPTIONS: "Part" is not translated, since it is defined
+%             in the repxx.sty files.
+%
+% HISTORY:    Written by Edi Saeckinger, Jun 5, 1987.
+%             Introducing variable names for strings to be compatible
+%             with german.sty of H. Partl, ES, Jun 26, 1989.
+%
+%************************************************************************
+%
+\typeout{Document substyle for international reports. Released 26 June 1989}
+
+%
+% INTRODUCING VARIABLES FOR REPORT STRINGS
+%
+
+\def\@chapapp{\chaptername}
+
+\def\tableofcontents{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\contentsname
+ \@mkboth{\uppercase{\contentsname}}{\uppercase{\contentsname}}}
+ \@starttoc{toc}\if@restonecol\twocolumn\fi}
+
+\def\fnum@figure{\figurename\ \thefigure}
+
+\def\listoffigures{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\listfigurename\@mkboth
+ {\uppercase{\listfigurename}}{\uppercase{\listfigurename}}}
+ \@starttoc{lof}\if@restonecol\twocolumn
+ \fi}
+
+\def\fnum@table{\tablename\ \thetable}
+
+\def\listoftables{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+ \fi\chapter*{\listtablename\@mkboth
+ {\uppercase{\listtablename}}{\uppercase{\listtablename}}}
+ \@starttoc{lot}\if@restonecol\twocolumn
+ \fi}
+
+\def\thebibliography#1{\chapter*{\bibname\@mkboth
+ {\uppercase{\bibname}}{\uppercase{\bibname}}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+
+\def\theindex{\@restonecoltrue\if@twocolumn\@restonecolfalse\fi
+ \columnseprule \z@
+ \columnsep 35pt\twocolumn[\@makeschapterhead{\indexname}]
+ \@mkboth{\uppercase{\indexname}}{\uppercase{\indexname}}
+ \thispagestyle{plain}\parindent\z@
+ \parskip\z@ plus .3pt\relax\let\item\@idxitem}
+
+%
+% SET VARIABLES AND REDEFINE \TODAY
+%
+\ifenglish
+\def\chaptername{Chapter}
+\def\contentsname{Contents}
+\def\figurename{Figure}
+\def\listfigurename{List of Figures}
+\def\tablename{Table}
+\def\listtablename{List of Tables}
+\def\bibname{Bibliography}
+\def\indexname{Index}
+\fi
+
+\ifgerman
+\def\chaptername{Kapitel}
+\def\contentsname{Inhaltsverzeichnis}
+\def\figurename{Figur}
+\def\listfigurename{Figurenverzeichnis}
+\def\tablename{Tabelle}
+\def\listtablename{Tabellenverzeichnis}
+\def\bibname{Literaturverzeichnis}
+\def\indexname{Sachverzeichnis}
+\def\today{\number\day.\space\ifcase\month\or
+  Januar\or Februar\or M\"arz\or April\or Mai\or Juni\or
+  Juli\or August\or September\or Oktober\or November\or Dezember\fi
+  \space\number\year
+}
+
+\def\abstract{
+\vskip 20mm
+\begin{center}
+{\it Zusammenfassung}
+\end{center}
+\begin{quote}}
+\def\endabstract{\end{quote}\par\null}
+
+\def\appendix{\par
+ \setcounter{chapter}{0}
+ \setcounter{section}{0}
+ \def\@chapapp{Anhang}
+ \def\thechapter{\Alph{chapter}}}
+
+\fi

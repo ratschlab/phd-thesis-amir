@@ -1,0 +1,216 @@
+% **********************************************
+% *                                            *
+% *         Substyle for ETH PhD thesis        *
+% *                                            *
+% **********************************************
+%
+% FILENAME:   ETHthesis.sty
+%
+% ABSTRACT:   Sets page layout according mats, redefines caption and heading
+%             fonts, allows full-length chapter and sections contents-entries
+%             even if the running head is abbreviated, allows chapter* titles
+%             to be included into the contents, produces running heads also for
+%             chapter*, provides macros for defining running heads, chapters
+%             start on an odd numbered page.
+%
+% HISTORY:    Written by Edi Saeckinger and Josef Goette, Jan 11, 1989.
+%             Nr. changed to No. in english title, ES, May 16, 1989.
+%             Figure and table caption introducer and headings in bold face,
+%             underlining of headings, ES, May 31, 1989.
+%             Adapted to new reportint.sty, ES, June 26, 1989.
+%             Removed \maketitle due to redundancy wrt
+%               ETHthesis.cls, Philipp Unterbrunner, Feb 13, 2012.
+%             Added font size option, Philipp Unterbrunner, Feb 13, 2012.
+%
+%************************************************************************
+%
+\typeout{Document substyle for ETH PhD thesis. Released 26 June 1989}
+\def\es{} % eat space for nice formatting
+
+\DeclareOption{10pt}{\def\fontsizeoption{10pt}}
+\DeclareOption{11pt}{\def\fontsizeoption{11pt}}
+\DeclareOption{12pt}{\def\fontsizeoption{12pt}}
+\ExecuteOptions{10pt}
+\ProcessOptions
+
+%
+% REDEFINE PAGESTYLE "HEADINGS"
+%
+% uppercase removed, slanted replaced by boldface, and underline added, ES
+% moved page number to footer corners, PU
+\newif\iftwoside
+\if@twoside         % If two-sided printing.
+\twosidetrue
+\def\ps@headings{
+  \let\@mkboth\markboth
+  \def\@evenhead{\underline{\makebox[\textwidth][l]{\bf\leftmark\vphantom{g}}}}%
+  \def\@oddhead{\underline{\makebox[\textwidth][r]{\bf\rightmark\vphantom{g}}}}%
+  \def\@evenfoot{\makebox[\textwidth][l]{\thepage}}
+  \def\@oddfoot{\makebox[\textwidth][r]{\thepage}}
+  \def\chaptermark##1{\markboth {\ifnum \c@secnumdepth >\m@ne
+    \@chapapp\ \thechapter. \ \fi ##1}{}}%
+  \def\sectionmark##1{\markright {\ifnum \c@secnumdepth >\z@
+    \thesection. \ \fi ##1}}}
+\def\ps@plain{
+  \def\@evenhead{}%
+  \def\@oddhead{}%
+  \def\@evenfoot{\makebox[\textwidth][l]{\thepage}}
+  \def\@oddfoot{\makebox[\textwidth][r]{\thepage}}
+}
+\else               % If one-sided printing.
+\twosidefalse
+  \def\ps@headings{
+  \let\@mkboth\markboth
+  \def\@oddhead{\underline{\makebox[\textwidth][c]{\bf\rightmark\vphantom{g}}}}%
+  \def\chaptermark##1{\markright {\ifnum \c@secnumdepth >\m@ne
+    \@chapapp\ \thechapter. \ \fi ##1}}
+  \def\sectionmark##1{\markright {\ifnum \c@secnumdepth >\z@
+    \thesection. \ \fi ##1}}}
+\fi
+
+%\rm\thepage
+
+%
+% PAGE LAYOUT
+%
+\pagestyle{headings}
+\setlength{\textheight}{169.705mm}
+\setlength{\textwidth}{96.894mm}
+\setlength{\topmargin}{-12mm}
+\setlength{\oddsidemargin}{8mm}
+\setlength{\evensidemargin}{8mm}
+\addtolength{\parskip}{3mm}
+
+%
+% REDEFINE CAPTION FONTS TO BOLD AND ITALIC
+%
+% \long\def\@makecaption#1#2{
+%  \vskip \fontsizeoption 
+%  \setbox\@tempboxa\hbox{{\bf #1: }\it #2}
+%  \ifdim \wd\@tempboxa >\hsize \unhbox\@tempboxa\par \else \hbox
+% to\hsize{\hfil\box\@tempboxa\hfil} 
+%  \fi}
+
+%
+% CONTENTS ENTRY FOR FULL SECTION TITLES
+%
+% The following change to a LATEX.TEX part is for: If \section[a]{bb}
+% is used in the original setting, then "a" gets the running head as
+% well as the entry to the table of contents. Here we want however
+% that "a" gets the running head only and the entry to the table of
+% contents is still "bb" (JG).
+%
+% begin of overwrite
+%ChangeMZ
+%\def\@sect#1#2#3#4#5#6[#7]#8{\ifnum #2>\c@secnumdepth
+%     \def\@svsec{}\else 
+%     \refstepcounter{#1}\edef\@svsec{\csname the#1\endcsname\hskip 1em }\fi
+%     \@tempskipa #5\relax
+%      \ifdim \@tempskipa>\z@ 
+%        \begingroup #6\relax
+%          \@hangfrom{\hskip #3\relax\@svsec}{\interlinepenalty \@M #8\par}
+%        \endgroup
+%       \csname #1mark\endcsname{#7}\addcontentsline
+%         {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+%                      \protect\numberline{\csname the#1\endcsname}\fi
+%                    #8}\else    % #7 changed to #8, JG
+%        \def\@svsechd{#6\hskip #3\@svsec #8\csname #1mark\endcsname
+%                      {#7}\addcontentsline
+%                           {toc}{#1}{\ifnum #2>\c@secnumdepth \else
+%                             \protect\numberline{\csname the#1\endcsname}\fi
+%                       #8}}\fi   % #7 changed to #8, JG
+%    \@xsect{#5}}
+% end ChangeMZ
+% end of overwrite
+
+%
+% RUNNING HEAD MACROS
+%
+% "empty" left and right head, i.e. without "CHAPTER", chapter-
+% number and section-number, only the text specified by parameter (JG).
+%
+\def\runheadel#1{\markboth{#1}{}}
+\def\runheader#1{\markright{#1}}
+%
+% chapter (left) and section (right) heads, text specified by
+% parameter (JG).
+%
+\def\runheadc#1{\markboth{
+   \ifnum \c@secnumdepth>\m@ne
+   \@chapapp\ \thechapter. \ \fi #1}{}}
+\def\runheads#1{\markright{
+   \ifnum \c@secnumdepth >\z@
+   \thesection. \ \fi #1}}
+
+%
+% DEFINE AND SET FLAG FOR ADDING CHAPER*-TITLES TO THE CONTENS
+%
+\newif\ifaddcontents \addcontentsfalse    % Create flag and set false.
+
+%
+% REDEFINITIONS TO THE REP10 STYLE
+%
+% Redefinitions to the rep10.sty can only be executed after \documentstyle.
+% The modifications are: \addcontentsline in \def\chapter
+% uses #2 instead of #1 to make #1 being still the running
+% head, but #2 being written into the table of contents. (JG)
+% \doubleclearpage is used in \chapter and \chapter*. Depending on the
+% addcontents flag, \addcontentsline is executed for \chapter*.
+% Set running heads for \chapter* as well. (ES)
+%
+\def\initETHthesis{
+
+\def\chapter{\clearpage \thispagestyle{empty} \cleardoublepage
+ % \thispagestyle{empty} and \cleardoublepage added, ES
+ \thispagestyle{plain} \global\@topnum\z@
+\@afterindentfalse \secdef\@chapter\@schapter} 
+\def\@chapter[##1]##2{\ifnum \c@secnumdepth >\m@ne
+ \refstepcounter{chapter}
+ \typeout{\@chapapp\space\thechapter: ##2.}  % : #2 added, ES
+ \addcontentsline{toc}{chapter}{\protect
+ \numberline{\thechapter}##2}\else   % #1 changed to #2, JG
+ \addcontentsline{toc}{chapter}{##2}\fi   % #1 changed to #2, JG
+ \chaptermark{##1}
+ \addtocontents{lof}{\protect\addvspace{\fontsizeoption}}
+\addtocontents{lot}{\protect\addvspace{\fontsizeoption}} \if@twocolumn
+\@topnewpage[\@makechapterhead{##2}] 
+ \else \@makechapterhead{##2}
+ \@afterheading \fi}
+\def\@schapter##1{{\let\mkbothx=\@mkboth  % Copy @mkboth to mkbothx locally.
+ \def\@mkboth####1####2{}                 % Inhibit @mkboth locally, because
+ \ifaddcontents                           % LL uses it in the chapter* argument!
+ \typeout{\@chapapp: ##1.}                % If addcontents flag is true, typeout
+ \addcontentsline{toc}{chapter}{\protect  % the chapter title and add it to the
+ \numberline{}##1}\fi                     % table of contents.
+ \mkbothx{##1}{##1}}                      % set running heads to title, E.S.
+ \if@twocolumn \@topnewpage[\@makeschapterhead{##1}]                     % ES
+ \else \@makeschapterhead{##1} 
+ \@afterheading\fi}
+}
+
+%
+% TRANSLATE REPORT STRINGS
+%
+\input{reportint.sty}
+
+%
+% REMOVE THOSE @MKBOTH FROM THE CHAPTER*
+%
+\def\tableofcontents{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+  \fi\chapter*{\contentsname}
+  \@starttoc{toc}\if@restonecol\twocolumn\fi}
+\def\listoffigures{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+  \fi\chapter*{\listfigurename}
+  \@starttoc{lof}\if@restonecol\twocolumn
+  \fi}
+\def\listoftables{\@restonecolfalse\if@twocolumn\@restonecoltrue\onecolumn
+  \fi\chapter*{\listtablename}
+  \@starttoc{lot}\if@restonecol\twocolumn
+  \fi}
+\def\thebibliography#1{\chapter*{\bibname}\list
+  {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+    \advance\leftmargin\labelsep
+    \usecounter{enumi}}
+    \def\newblock{\hskip .11em plus .33em minus -.07em}
+    \sloppy
+    \sfcode`\.=1000\relax}

@@ -1,0 +1,38 @@
+\begin{tikzpicture}[scale=1.5]
+    % Define the primary edges of the parallelepiped
+    \foreach \x/\l in {0/1,2/1.5,4.5/1.7}{
+    \coordinate (O) at (\x,0,0);
+    \coordinate (a) at (\l,0,0);
+    \coordinate (b) at (0,2.5-\l,-1);
+    \coordinate (c) at (0,0,1);
+    
+    % Define the remaining vertices of the parallelepiped
+    \coordinate (n-0-0-0) at ($(O)$);
+    \coordinate (n-0-0-1) at ($(O)+(a)$);
+    \coordinate (n-0-1-0) at ($(O)+(b)$);
+    \coordinate (n-0-1-1) at ($(O)+(a)+(b)$);
+    \coordinate (n-1-0-0) at ($(O)+(c)$);
+    \coordinate (n-1-0-1) at ($(O)+(a)+(c)$);
+    \coordinate (n-1-1-0) at ($(O)+(b)+(c)$);
+    \coordinate (n-1-1-1) at ($(O)+(a)+(b)+(c)$);
+
+    \foreach \i in {0,1} {
+        \foreach \j in {0,1} {
+            \draw[black, thick] (n-\i-\j-0) -- (n-\i-\j-1);
+            \draw[black, thick] (n-\i-0-\j) -- (n-\i-1-\j);
+            \draw[black, thick] (n-0-\i-\j) -- (n-1-\i-\j);
+        }
+    }
+    \draw (n-0-1-0) -- (n-0-1-1)node[midway,above,color=blue]{$\vec{a}_1$};
+    \draw (n-0-0-1) -- (n-0-1-1)node[midway,right,color=blue]{$\vec{a}_2$};
+    \draw (n-0-1-1) -- (n-1-1-1)node[midway,left,color=blue]{$\vec{a}_3$};
+    
+    % % Draw the edges of the parallelepiped
+    % \draw[black, thick] (A) -- (B)node[midway,above,color=red]{$l_1$} -- (F) -- (H);
+    % \draw[black, thick] (A) -- (C)node[midway,right,color=red]{$l_2$} -- (G) -- (D) -- (A)node[midway,above,color=red]{$l_3$};
+    % \draw[black, thick] (A) -- (B) -- (E) -- (C);
+    % \draw[black, thick] (B) -- (E) -- (H) -- (G);
+    % \draw[black, thick] (C) -- (G) -- (H) -- (E);
+    % \draw[black, thick] (D) -- (F);
+    }
+\end{tikzpicture}

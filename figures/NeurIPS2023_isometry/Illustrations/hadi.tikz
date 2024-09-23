@@ -1,0 +1,78 @@
+\tdplotsetmaincoords{70}{45}
+\begin{figure}[h!]
+    \centering
+   
+
+\begin{tabular}{c c c}
+     \begin{tikzpicture}[scale=2, 3d cube/.style={fill=none, draw=black, line width=0.4pt}]
+
+% Define the coordinates of the 3D square
+\coordinate (A) at (0,0,0) ;
+\coordinate (B) at (1,0,0);
+\coordinate (C) at (1,1,0);
+\coordinate (D) at (0,1,0);
+
+\coordinate (E) at (0,0,1);
+\coordinate (F) at (1,0,1);
+\coordinate (G) at (1,1,1);
+\coordinate (H) at (0,1,1);
+
+\draw[->,thick] (A) -- (B) node[midway,above left] {$v_1$}; 
+\draw[->,thick] (A) -- (D) node[midway,above right] {$v_2$};
+
+\draw[->,thick] (A) -- (E) node[midway,above right] {$v_3$}; 
+% \draw [->] (A) -- (B) {$v_1$}; 
+% Draw the square
+\draw[3d cube] (A) -- (B) -- (C) -- (D) -- cycle;
+\draw[3d cube] (A) -- (E);
+\draw[3d cube] (B) -- (F);
+\draw[3d cube] (C) -- (G);
+\draw[3d cube] (D) -- (H);
+\draw[3d cube] (E) -- (F) -- (G) -- (H) -- cycle;
+\draw[3d cube] (F) -- (E);
+\draw[3d cube] (G) -- (F);
+\draw[3d cube] (H) -- (G);
+\draw[3d cube] (E) -- (H);
+
+\end{tikzpicture} & \hspace{0.2cm} & 
+\begin{tikzpicture}[scale=2, 3d cube/.style={fill=none, draw=black, line width=0.4pt}]
+  \pgfmathsetmacro{\a}{1.1}
+  \pgfmathsetmacro{\b}{0.6}
+  \pgfmathsetmacro{\c}{1/\a}
+\pgfmathsetmacro{\d}{0.1}
+  \coordinate (A) at (0,0,0);
+  \coordinate (B) at (\a,0,0);
+  \coordinate (C) at (\a+\b,\c,0);
+  \coordinate (D) at (\b,\c,0);
+  \coordinate (E) at (\d,\d,\c);
+  \coordinate (F) at (\a+\d,\d,\c);
+  \coordinate (G) at (\a+\b+\d,\c+\d,\c);
+  \coordinate (H) at (\b+\d,\c+\d,\c);
+\draw[->,thick] (A) -- (B) node[midway,above left] {$v_1$}; 
+\draw[->,thick] (A) -- (D) node[midway,above right] {$v_2$};
+
+\draw[->,thick] (A) -- (E) node[midway,above right] {$v_3$};
+  \draw[] (A) -- (B) -- (C) -- (D) -- cycle;
+  \draw[] (A) -- (B) -- (F) -- (E) -- cycle;
+  \draw[] (C) -- (D) -- (H) -- (G) -- cycle;
+  \draw[] (D) -- (A) -- (E) -- (H) -- cycle;
+
+  \draw[dashed] (A) -- (E);
+  \draw[dashed] (B) -- (F);
+  \draw[dashed] (C) -- (G);
+  \draw[dashed] (D) -- (H);
+
+  \draw (A) -- (B) -- (C) -- (D) -- cycle;
+  \draw (A) -- (E) -- (H) -- (D);
+  \draw (E) -- (F) -- (G) -- (H);
+  \draw (B) -- (F);
+  \draw (C) -- (G);
+
+  \node[above right] at (B) {};
+  \node[below] at (D) {};
+  \node[above] at (G) {};
+\end{tikzpicture}  \\
+   a  &  & b
+\end{tabular}
+\caption{$\ID(a)< \ID(b)$. Consider $3\times 3$ matrix $X_{a}$ ($X_b$) whose columns are $v_1,v_2,$ and $v_3$ in plot a (b); then, $\ID(X^\top_a X_a)< \ID(X^\top_b X_b)$ holds.  } \label{fig:iso_gap}
+\end{figure}
