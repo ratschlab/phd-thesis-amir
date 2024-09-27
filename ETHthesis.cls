@@ -183,7 +183,7 @@ Non-standard LaTeX document class]
       \uppercase\expandafter{\authorstring}\vspace{.015\linewidth} \linebreak
       \acatitlestring\vspace{.01\linewidth} \linebreak
       born on \dateofbirthstring\vspace{.01\linewidth} \linebreak
-      citizen of \citizenstring
+      % citizen of \citizenstring
     \end{center}
     \vspace{.05\linewidth}
     % \vspace{0.5\fill}
