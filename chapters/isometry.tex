@@ -232,7 +232,7 @@ Finally, we can state one of the central results of this chapter, which characte
 \begin{theorem}\label{iso:thm:global_attract}
 Let $\phi$ be an activaiton with kernel map $\kappa$ that is centered $\kappa(0)=0,$ and $\kappa(1)=1.$ Let $\rho_\ell$ be the kernel sequence $\rho_{\ell+1}=\kappa(\rho_\ell),$ given initial value $\rho_0.$ Then, the sequence contracts towards fixed-point zero $\rho^*=0$ with rate $\alpha$:
     \begin{align}
-        &\frac{|\rho_\ell|}{1-|\rho_\ell|} \le \frac{|\rho_0|}{1-|\rho_0|}\alpha^{\ell}, && \text{where } \alpha = \frac{1}{2-\kappa'(0)}
+        &\frac{|\rho_\ell|}{1-|\rho_\ell|} \le \frac{|\rho_0|}{1-|\rho_0|}\alpha^{\ell}, && \alpha := \frac{1}{2-\kappa'(0)},
     \end{align}
  where $\alpha$ is strictly less than one if the activation is non-linear. The only other fixed points can be $\rho^*=1$ or $\rho^*=-1,$, and none of them is locally or globally attractive.
 \end{theorem}
@@ -323,7 +323,7 @@ So far, we only discussed the convergence of the kernel map for activations that
 
 
 \begin{theorem}
-Let $\kappa$ be the kernel map satisfying $\kappa(1)=1$. Define the kernel sequence $\rho_{\ell+1}=\kappa(\rho_\ell)$, with initial step $\rho_0 \in (-1,1)$. Assuming that the activation is non-linear, there is a unique $\rho^*\in[0,1]$ such that $\kappa(\rho^*) = \rho^*$, and $\kappa'(\rho^*) < 1.$ Furthermore, we have the following contraction rate towards $\rho^*$:
+Let $\kappa$ be the kernel map satisfying $\kappa(1)=1$. Define the kernel sequence $\rho_{\ell+1}=\kappa(\rho_\ell)$, with initial step $\rho_0 \in (-1,1)$. Assuming that the activation is non-linear, there is a unique $\rho^*$ that is globally contracting, which is necessarily non-negative $\rho^*\in[0,1].$ The only other fixed-points distinct from $\rho^*,$ could be $-1$ or $1,$ neither of which are locally or globally contracting. Furthermore, we have the following contraction rate towards $\rho^*$:
 \begin{enumerate}
     \item If $\kappa(0)=0$, then $\rho^*=0$ is an attracting with rate 
     \begin{align}
@@ -344,6 +344,10 @@ Let $\kappa$ be the kernel map satisfying $\kappa(1)=1$. Define the kernel seque
     where $\alpha$ is strictly less than one if the activation is non-linear.
 \end{enumerate}
 \end{theorem}
+
+\begin{remark}
+One of the most striking results of this theorem is that for any non-linear activation, there is a unique fixed point $\rho^*$ that is locally or globally attractive. Furthermore, the fixed point is necessarily non-negative. This implies that for any MLP with non-linear activations, the covariance of pre-activations will converge towards a fixed point, which is always non-negative. 
+\end{remark}
 
 \begin{remark}
 The assumptions laid out in the theorem are nearly tight. For example, the non-linearity assumption is necessary to rule out identity activation, where every point in $[-1,1]$ is a fixed point. Furthermore, considering odd activations such as $\phi(x) = x^3,$ and we can see that if $\rho_0\in\{-1,1\}$, the sequence will remain the same $\rho_\ell=\rho_0,$ and hence will not converge, which implies the condition that $\rho_0\in(-1,1)$ is necessary. 
